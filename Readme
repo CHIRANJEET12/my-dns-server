@@ -1,0 +1,92 @@
+# Custom DNS Server using Node.js
+
+This is a simple DNS server implemented in **Node.js** using **UDP sockets**. It listens for DNS queries on **127.0.0.1:53** and resolves domain names to their corresponding IP addresses using Node.js's built-in `dns` module.
+
+## Features
+- Handles incoming DNS queries over UDP
+- Extracts domain names from requests
+- Resolves domain names to IPv4 addresses
+- Constructs and sends DNS responses
+
+## Prerequisites
+Make sure you have:
+- **Node.js** installed (v14 or later recommended)
+- A terminal or command prompt
+
+## Installation
+Clone this repository and navigate into the project directory:
+
+```sh
+git clone https://github.com/yourusername/my-dns-server.git
+cd my-dns-server
+```
+
+Install dependencies (if required):
+
+```sh
+npm install
+```
+
+## Running the DNS Server
+Start the DNS server by running:
+
+```sh
+node main.js
+```
+
+If everything is working correctly, you should see:
+
+```sh
+DNS Server listening on 127.0.0.1:53
+```
+
+## Testing the DNS Server
+### Using `nslookup`
+Open a new terminal and run:
+
+```sh
+nslookup google.com 127.0.0.1
+```
+
+Expected output (example):
+
+```sh
+Server:  UnKnown
+Address:  127.0.0.1
+
+Non-authoritative answer:
+Name:    google.com
+Addresses:  142.250.183.46
+```
+
+### Using `dig` (Linux/macOS)
+If `dig` is available on your system, run:
+
+```sh
+dig @127.0.0.1 google.com
+```
+
+You should see the resolved IP in the response.
+
+## How It Works
+1. The server listens for incoming DNS queries on port **53** (default DNS port).
+2. When a query is received, it extracts the **domain name** from the request.
+3. The server uses `dns.resolve4()` to fetch the IP address for the domain.
+4. It constructs a **DNS response packet** and sends it back to the client.
+5. The client receives the resolved IP address.
+
+## Troubleshooting
+- If you see **permission errors** when binding to port 53, try running the server as an administrator or use a non-privileged port.
+- If the response is **empty**, check if your firewall or another DNS service is blocking the request.
+
+## Future Improvements
+- Support for **IPv6 (AAAA) records**
+- Implementing a **custom DNS cache**
+- Adding support for **other record types (CNAME, MX, TXT, etc.)**
+
+## License
+This project is open-source and available under the **MIT License**.
+
+---
+
+Feel free to contribute or suggest improvements! 🚀
